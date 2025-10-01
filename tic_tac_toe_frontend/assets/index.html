@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tic Tac Toe • Ocean Professional</title>
+  <meta name="description" content="Modern Tic Tac Toe with ocean professional theme" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#board">Skip to game board</a>
+  <main class="app" role="application" aria-label="Tic Tac Toe game">
+    <section class="status-area">
+      <h1 class="title">Tic Tac Toe</h1>
+      <p id="status" class="status" role="status" aria-live="polite">Current turn: X</p>
+      <div class="indicators" aria-hidden="true">
+        <div class="player player-x active">X</div>
+        <div class="player player-o">O</div>
+      </div>
+    </section>
+
+    <section class="board-wrap">
+      <div id="board"
+           class="board"
+           role="grid"
+           aria-label="3 by 3 Tic Tac Toe board">
+        <button class="cell" role="gridcell" aria-label="Row 1, Column 1, empty" data-index="0"></button>
+        <button class="cell" role="gridcell" aria-label="Row 1, Column 2, empty" data-index="1"></button>
+        <button class="cell" role="gridcell" aria-label="Row 1, Column 3, empty" data-index="2"></button>
+
+        <button class="cell" role="gridcell" aria-label="Row 2, Column 1, empty" data-index="3"></button>
+        <button class="cell" role="gridcell" aria-label="Row 2, Column 2, empty" data-index="4"></button>
+        <button class="cell" role="gridcell" aria-label="Row 2, Column 3, empty" data-index="5"></button>
+
+        <button class="cell" role="gridcell" aria-label="Row 3, Column 1, empty" data-index="6"></button>
+        <button class="cell" role="gridcell" aria-label="Row 3, Column 2, empty" data-index="7"></button>
+        <button class="cell" role="gridcell" aria-label="Row 3, Column 3, empty" data-index="8"></button>
+      </div>
+      <div class="controls">
+        <button id="resetBtn" class="btn" type="button" aria-label="Reset game">Reset</button>
+      </div>
+    </section>
+
+    <footer class="footer" aria-hidden="true">
+      <span class="hint">Tip: Use arrow keys to move, Enter/Space to place.</span>
+    </footer>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

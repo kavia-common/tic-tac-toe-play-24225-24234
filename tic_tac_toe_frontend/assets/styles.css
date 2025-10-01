@@ -1,0 +1,240 @@
+:root {
+  /* Ocean Professional theme tokens (from provided style guide + design system) */
+  --color-primary: #2563EB; /* Ocean blue primary */
+  --color-secondary: #F59E0B; /* Amber accents */
+  --color-success: #F59E0B;
+  --color-error: #EF4444;
+  --color-text: #111827;
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+
+  /* Design system mapped tokens (subset used) */
+  --ds-blue-strong: #0047ff; /* color_0047ff */
+  --ds-gray-100: #f5f5f5;    /* color_f5f5f5 */
+  --ds-gray-200: #ebebeb;    /* color_ebebeb */
+  --ds-gray-300: #e6e6e6;    /* color_e6e6e6 */
+  --ds-text-dark: #1f1f1f;   /* color_1f1f1f */
+  --ds-text-darker: #141414; /* color_141414 */
+  --ds-black: #000000;       /* color_000000 */
+
+  /* Typography */
+  --font-family: 'Lexend', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --title-size: 24px;  /* typo_20 */
+  --title-weight: 700;
+  --status-size: 18px; /* typo_21 */
+  --status-weight: 500;
+
+  /* Shape and elevation (based on styles with shadows) */
+  --radius-6: 6px;     /* style_11/14/22/31 */
+  --radius-12: 12px;   /* style_40/66/90 */
+  --radius-16: 16px;   /* style_1/15/79 */
+  --radius-24: 24px;   /* style_0/37/39 */
+
+  /* Subtle shadows inspired by shadow_0 and shadow_1 */
+  --shadow-01: 0 1px 2px 0 rgba(0, 14, 51, 0.2); /* #000e33 */
+  --shadow-02: 0 1px 1px 0 rgba(0, 14, 51, 0.15);
+
+  /* Transitions */
+  --ease: 200ms ease;
+}
+
+/* Base reset and accessibility helpers */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(37,99,235,0.08), rgba(243,244,246,0) 60%),
+    linear-gradient(180deg, rgba(37,99,235,0.06), rgba(243,244,246,0)) fixed,
+    var(--color-bg);
+}
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 8px 12px;
+  border-radius: var(--radius-6);
+  box-shadow: var(--shadow-01);
+  z-index: 999;
+}
+
+.app {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  justify-items: center;
+  padding: 40px 16px;
+  gap: 24px;
+}
+
+/* Status area */
+.status-area {
+  background: var(--color-surface);
+  color: var(--ds-text-darker);
+  border-radius: var(--radius-16);
+  box-shadow: var(--shadow-01);
+  padding: 20px 24px;
+  width: min(680px, 100%);
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+.title {
+  margin: 0;
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  letter-spacing: -0.24px; /* from typo_20 */
+  color: var(--ds-text-darker);
+  text-align: center;
+}
+.status {
+  margin: 0;
+  font-size: var(--status-size);
+  font-weight: var(--status-weight);
+  color: var(--ds-text-dark);
+}
+.indicators {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 12px;
+}
+.player {
+  width: 44px; height: 44px;
+  border-radius: 80px; /* style_80 circle */
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #fff;
+  background: var(--ds-gray-200);
+  box-shadow: var(--shadow-02);
+  transition: transform var(--ease), box-shadow var(--ease), background var(--ease);
+}
+.player-x { background: var(--color-primary); }
+.player-o { background: var(--color-secondary); }
+.player.active {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0,14,51,0.25);
+}
+
+/* Board area */
+.board-wrap {
+  background: var(--color-surface);
+  border-radius: var(--radius-16); /* style_79 */
+  box-shadow: var(--shadow-01);
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+  width: min(560px, 100%);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px; /* style_82 border spacing inspiration */
+}
+
+.cell {
+  aspect-ratio: 1 / 1;
+  background: #ffffff;            /* style_81 surface */
+  border: 0.5px solid var(--ds-gray-300); /* style_82 border */
+  border-radius: var(--radius-6); /* style_11/22 */
+  box-shadow: var(--shadow-02);
+  font-weight: 700;
+  font-size: clamp(28px, 8vw, 48px); /* use large readable marks */
+  color: var(--ds-text-darker);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform var(--ease), box-shadow var(--ease), background var(--ease), border-color var(--ease);
+}
+.cell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,14,51,0.15);
+  border-color: var(--ds-blue-strong);
+}
+.cell:focus-visible {
+  outline: 2px solid var(--ds-blue-strong); /* style_86 border color */
+  outline-offset: 2px;
+}
+.cell[disabled] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Tokened “today/selected” accent (style_14 concept) will be applied via JS class .win or .accent */
+.cell.accent {
+  background: var(--ds-blue-strong);
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow:
+    0 3px 2px rgba(0, 71, 255, 0.35), /* shadow_2 */
+    0 1.5px 1px rgba(0, 31, 112, 0.35); /* shadow_3 */
+}
+
+/* Winning highlight */
+.cell.win {
+  background: linear-gradient(180deg, rgba(37,99,235,0.12), rgba(255,255,255,0));
+  border-color: var(--color-primary);
+}
+
+/* Controls */
+.controls {
+  display: grid;
+  justify-items: center;
+}
+.btn {
+  appearance: none;
+  border: 2px solid transparent;
+  border-radius: var(--radius-6);
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  background: var(--color-primary);
+  box-shadow:
+    0 3px 2px rgba(0, 71, 255, 0.35),
+    0 1.5px 1px rgba(0, 31, 112, 0.35);
+  cursor: pointer;
+  transition: transform var(--ease), box-shadow var(--ease), opacity var(--ease), background var(--ease);
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 10px rgba(0,14,51,0.2);
+  opacity: 0.95;
+}
+.btn:focus-visible {
+  outline: none;
+  border-color: #ffffff;
+}
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Footer */
+.footer {
+  opacity: 0.8;
+  font-size: 14px;
+  color: var(--ds-text-dark);
+}
+.hint {
+  background: var(--ds-gray-100);
+  border-radius: var(--radius-6);
+  padding: 6px 10px;
+  box-shadow: var(--shadow-02);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .status-area { padding: 16px; }
+  .board-wrap { padding: 16px; }
+  .player { width: 40px; height: 40px; }
+}
