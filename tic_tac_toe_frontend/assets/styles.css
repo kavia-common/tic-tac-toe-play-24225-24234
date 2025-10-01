@@ -17,12 +17,13 @@
   --ds-text-darker: #141414; /* color_141414 */
   --ds-black: #000000;       /* color_000000 */
 
-  /* Typography */
+  /* Typography from design system (Lexend) */
   --font-family: 'Lexend', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  --title-size: 24px;  /* typo_20 */
-  --title-weight: 700;
-  --status-size: 18px; /* typo_21 */
-  --status-weight: 500;
+  --title-size: 24px;   /* typo_20 size */
+  --title-weight: 700;  /* typo_20 weight */
+  --title-letter: -0.24px; /* typo_20 letter spacing */
+  --status-size: 18px;  /* typo_21 size */
+  --status-weight: 500; /* typo_21 weight */
 
   /* Shape and elevation (based on styles with shadows) */
   --radius-6: 6px;     /* style_11/14/22/31 */
@@ -30,8 +31,8 @@
   --radius-16: 16px;   /* style_1/15/79 */
   --radius-24: 24px;   /* style_0/37/39 */
 
-  /* Subtle shadows inspired by shadow_0 and shadow_1 */
-  --shadow-01: 0 1px 2px 0 rgba(0, 14, 51, 0.2); /* #000e33 */
+  /* Subtle shadows inspired by shadow_0 and shadow_1 (#000e33) */
+  --shadow-01: 0 1px 2px 0 rgba(0, 14, 51, 0.2);
   --shadow-02: 0 1px 1px 0 rgba(0, 14, 51, 0.15);
 
   /* Transitions */
@@ -92,7 +93,7 @@ body {
   margin: 0;
   font-size: var(--title-size);
   font-weight: var(--title-weight);
-  letter-spacing: -0.24px; /* from typo_20 */
+  letter-spacing: var(--title-letter);
   color: var(--ds-text-darker);
   text-align: center;
 }
@@ -169,8 +170,13 @@ body {
   cursor: not-allowed;
   opacity: 0.6;
 }
+.cell[disabled]:hover {
+  transform: none;
+  box-shadow: var(--shadow-02);
+  border-color: var(--ds-gray-300);
+}
 
-/* Tokened “today/selected” accent (style_14 concept) will be applied via JS class .win or .accent */
+/* Tokened “today/selected” accent (style_14 concept) applied via JS as .accent or .win */
 .cell.accent {
   background: var(--ds-blue-strong);
   border-color: #ffffff;
@@ -218,6 +224,13 @@ body {
 .btn:active {
   transform: translateY(0);
 }
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow-02);
+}
 
 /* Footer */
 .footer {
@@ -230,6 +243,20 @@ body {
   border-radius: var(--radius-6);
   padding: 6px 10px;
   box-shadow: var(--shadow-02);
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .player.active,
+  .cell:hover,
+  .btn:hover {
+    transform: none;
+  }
+  .btn,
+  .cell,
+  .player {
+    transition: none;
+  }
 }
 
 /* Responsive adjustments */
